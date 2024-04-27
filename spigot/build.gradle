@@ -102,7 +102,7 @@ processResources {
 }
 
 jar {
-    classifier = 'unshaded'
+    archiveClassifier = 'unshaded'
 }
 
 shadowJar {
@@ -130,9 +130,9 @@ shadowJar {
         include(dependency(':bukkit-helper-120-5'))
     }
     relocate('org.bstats', 'org.dynmap.bstats')
-    destinationDir = file '../target'
-    archiveName = "Dynmap-${parent.version}-spigot.jar"
-    classifier = ''
+    destinationDirectory = file '../target'
+    archiveBaseName = "Dynmap"
+    archiveClassifier = 'spigot'
 }
 shadowJar.doLast {
     task ->
