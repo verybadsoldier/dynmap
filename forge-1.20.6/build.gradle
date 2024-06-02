@@ -14,18 +14,18 @@ apply plugin: 'eclipse'
 
 eclipse {
     project {
-        name = "Dynmap(Forge-1.20)"
+        name = "Dynmap(Forge-1.20.6)"
     }
 }
 
-sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = JavaLanguageVersion.of(17) // Need this here so eclipse task generates correctly.
+sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = JavaLanguageVersion.of(21) // Need this here so eclipse task generates correctly.
 
 println('Java: ' + System.getProperty('java.version') + ' JVM: ' + System.getProperty('java.vm.version') + '(' + System.getProperty('java.vendor') + ') Arch: ' + System.getProperty('os.arch'))
 
 ext.buildNumber = System.getenv().BUILD_NUMBER ?: "Dev"
 
 minecraft {
-    mappings channel: 'official', version: '1.20'
+    mappings channel: 'official', version: '1.20.6'
     accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
     runs {
         server {
@@ -34,13 +34,13 @@ minecraft {
     }
 }
 
-project.archivesBaseName = "${project.archivesBaseName}-forge-1.20"
+project.archivesBaseName = "${project.archivesBaseName}-forge-1.20.6"
 
 dependencies {
     implementation project(path: ":DynmapCore", configuration: "shadow")
     implementation project(path: ':DynmapCoreAPI')
     
-    minecraft 'net.minecraftforge:forge:1.20-46.0.1'
+    minecraft 'net.minecraftforge:forge:1.20.6-50.0.31'
 }
 
 processResources
@@ -49,7 +49,7 @@ processResources
         // replace version and mcversion
         expand(
         	version: project.version + '-' + project.ext.buildNumber,
-        	mcversion: "1.20"
+        	mcversion: "1.20.6"
     	)
     }
 }
@@ -61,10 +61,10 @@ shadowJar {
         exclude("META-INF/maven/**")
         exclude("META-INF/services/**")
     }
-	relocate('org.apache.commons.codec', 'org.dynmap.forge_1_20.commons.codec')
+	relocate('org.apache.commons.codec', 'org.dynmap.forge_1_20_6.commons.codec')
     
     archiveBaseName = "Dynmap"
-    archiveClassifier = "forge-1.20"
+    archiveClassifier = "forge-1.20.6"
     destinationDirectory = file '../target'
 }
 
