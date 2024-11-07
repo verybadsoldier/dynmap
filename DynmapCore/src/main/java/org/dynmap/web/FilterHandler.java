@@ -25,7 +25,6 @@ public class FilterHandler extends AbstractHandler {
         for(Filter f : filters) {
             try {
                 FilterHolder holder = new FilterHolder(f);
-                holder.start();
                 holder.initialize();
                 this.filters.add(holder);
             }catch (Exception e){
