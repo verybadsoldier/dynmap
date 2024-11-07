@@ -13,8 +13,8 @@ sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = co
 dependencies {
     implementation project(':DynmapCoreAPI')
     implementation 'javax.servlet:javax.servlet-api:3.1'
-    implementation'org.eclipse.jetty:jetty-server:9.4.26.v20200117'
-    implementation 'org.eclipse.jetty:jetty-servlet:9.4.26.v20200117'
+    implementation'org.eclipse.jetty:jetty-server:9.4.56.v20240826'
+    implementation 'org.eclipse.jetty:jetty-servlet:9.4.56.v20240826'
     implementation 'com.googlecode.json-simple:json-simple:1.1.1'
     implementation 'org.yaml:snakeyaml:1.23'	// DON'T UPDATE - NEWER ONE TRIPS ON WINDOWS ENCODED FILES
     implementation 'com.googlecode.owasp-java-html-sanitizer:owasp-java-html-sanitizer:20180219.1'
