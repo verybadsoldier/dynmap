@@ -15,49 +15,48 @@ import java.util.LinkedList;
 
 public class FilterHandler extends AbstractHandler {
     private Handler handler;
-    private LinkedList<FilterHolder> filters = new LinkedList<FilterHolder>();
+    private LinkedList<Filter> filters = new LinkedList<Filter>();
 
     public FilterHandler() {
     }
-    
+
     public FilterHandler(Handler handler, Iterable<Filter> filters) {
         this.handler = handler;
-        for(Filter f : filters) {
+        for (Filter f : filters) {
             try {
-                FilterHolder holder = new FilterHolder(f);
-                holder.initialize();
-                this.filters.add(holder);
-            }catch (Exception e){
-                Log.severe("Failed to initialize filter holder: "+e.toString());
+                this.filters.add(f);
+            } catch (Exception e) {
+                Log.severe("Failed to initialize filter holder: " + e.toString());
             }
         }
     }
-    
+
     public Handler getHandler() {
         return handler;
     }
-    
+
     public void setHandler(Handler handler) {
         this.handler = handler;
     }
-    
-    public Iterable<FilterHolder> getFilters() {
+
+    public Iterable<Filter> getFilters() {
         return filters;
     }
-    
+
     public void addFilter(Filter filter) {
-        filters.add(new FilterHolder(filter));
+        filters.add(filter);
     }
 
     @Override
-    public void handle(final String target, final Request baseRequest, final HttpServletRequest request, final HttpServletResponse response) throws IOException, ServletException {
+    public void handle(final String target, final Request baseRequest, final HttpServletRequest request,
+            final HttpServletResponse response) throws IOException, ServletException {
         final Handler handler = this.getHandler();
-        final Iterator<FilterHolder> iterator = getFilters().iterator();
+        final Iterator<Filter> iterator = getFilters().iterator();
         final FilterChain chain = new FilterChain() {
             @Override
             public void doFilter(ServletRequest re, ServletResponse rs) throws IOException, ServletException {
                 if (iterator.hasNext()) {
-                    Filter f = iterator.next().getFilter();
+                    Filter f = iterator.next();
                     f.doFilter(request, response, this);
                 } else {
                     handler.handle(target, baseRequest, request, response);
